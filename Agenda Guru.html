@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Agenda</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        .table-container {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .signature-cell {
+            min-width: 120px;
+            height: 60px;
+            border: 1px dashed #d1d5db;
+            background: #f9fafb;
+        }
+        
+        .signature-cell:hover {
+            background: #f3f4f6;
+        }
+        
+        .print-button:hover {
+            transform: translateY(-1px);
+        }
+        
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            
+            .print-title {
+                display: block !important;
+            }
+            
+            body {
+                background: white !important;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 0.3s ease-out;
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .nav-item {
+            transition: all 0.2s ease;
+        }    
+        .nav-item:hover {
+            transform: translateX(4px);
+        }
+        .sidebar-transition {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+</style>
+
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-50 min-h-full font-sans">
+    <div class="flex min-h-screen">
+
+                <!-- Sidebar -->
+            <div id="sidebar"
+                class="sidebar-transition fixed inset-y-0 left-0 z-50 w-72 bg-white shadow-2xl transform -translate-x-full border-r border-gray-200 flex flex-col">
+
+                <!-- Sidebar Header -->
+            <div class="flex items-center justify-between h-20 px-6 bg-gradient-to-r from-blue-600 to-purple-600 flex-shrink-0">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center shadow-lg">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-white">MAS At-Tafsiri</h1>
+                    <p class="text-sm text-white/80">2025/2026</p>
+                </div>
+            </div>
+            <button id="closeSidebar" class="text-white hover:text-white/80 p-2 rounded-lg hover:bg-white/10">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+
+    <!-- Navigation (scrollable part) -->
+    <nav class="flex-1 overflow-y-auto px-4 py-6">
+        <div class="space-y-2">
+            
+            <a href="Dash.html" class="nav-item flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-xl group">
+                <div class="w-10 h-10 bg-gray-100 group-hover:bg-blue-600 rounded-lg flex items-center justify-center mr-3 transition-colors">
+                    <svg class="w-5 h-5 text-blue-600 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <span class="font-medium">Agenda Hari Ini</span>
+                    <p class="text-xs text-gray-500 group-hover:text-gray-600">Jadwal mengajar</p>
+                </div>
+            </a>
+            
+            <a href="Jadwal.html" class="nav-item flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-xl group">
+                <div class="w-10 h-10 bg-gray-100 group-hover:bg-blue-600 rounded-lg flex items-center justify-center mr-3 transition-colors">
+                    <svg class="w-5 h-5 text-blue-600 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                </div>
+                <div>
+                    <span class="font-medium group-hover:text-gray-900">Jadwal Mengajar</span>
+                    <p class="text-xs text-gray-500 group-hover:text-gray-600">Kelola jadwal</p>
+                </div>
+            </a>
+            
+            <a href="Data Siswa.html" class="nav-item flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-xl group">
+                <div class="w-10 h-10 bg-gray-100 group-hover:bg-blue-600 rounded-lg flex items-center justify-center mr-3 transition-colors">
+                    <svg class="w-5 h-5 text-blue-600 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <span class="font-medium group-hover:text-gray-900">Data Siswa</span>
+                    <p class="text-xs text-gray-500 group-hover:text-gray-600">Manajemen siswa</p>
+                </div>
+            </a>                    
+            <!-- item aktif -->
+            <a href="Agenda Guru.html" class="nav-item flex items-center px-4 py-3 text-white bg-gradient-to-r from-blue-500 to-blue-700 rounded-xl shadow-lg">
+                <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center mr-3">
+                    <svg class="w-5 h-5 text-white-600 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2-10H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V8a2 2 0 00-2-2zM9 2h6a2 2 0 012 2v2H7V4a2 2 0 012-2z"/>
+                    </svg>
+                </div>
+                <div>
+                    <span class="font-medium">Data Agenda</span>
+                    <p class="text-xs text-white/80">Manajemen Agenda Kegiatan</p>
+                </div>
+            </a>
+
+            <div class="nav-item">
+                <button onclick="toggleSubMenu('laporanSubMenu')" class="w-full flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-xl group focus:outline-none transition-all">
+                    <div class="w-10 h-10 bg-gray-100 group-hover:bg-blue-600 rounded-lg flex items-center justify-center mr-3 transition-colors">
+                        <svg class="w-5 h-5 text-blue-600 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                    <div class="flex justify-between items-center w-full">
+                        <div>
+                            <span class="font-medium group-hover:text-gray-900">Laporan</span>
+                            <p class="text-xs text-gray-500 group-hover:text-gray-600">Analisis data</p>
+                        </div>
+                        <!-- Panah dropdown -->
+                            <svg id="arrow-laporanSubMenu" class="w-4 h-4 text-gray-500 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </div>
+                </button>
+
+                <!-- 🔽 Submenu -->
+                <div id="laporanSubMenu" class="hidden pl-16 mt-2 space-y-2">
+                    <a href="Laporan Guru.html"
+                        class="block text-gray-600 hover:text-purple-700 transition-colors">
+                        • Aktitas Guru
+                    </a>
+                    <a href="Laporan Siswa.html"
+                        class="block text-gray-600 hover:text-purple-700 transition-colors">
+                        • Laporan Siswa
+                    </a>
+                </div>
+                </div>
+
+            <a href="#" class="nav-item flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-xl group">
+                <div class="w-10 h-10 bg-gray-100 group-hover:bg-orange-600 rounded-lg flex items-center justify-center mr-3 transition-colors">
+                    <svg class="w-5 h-5 text-orange-600 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <span class="font-medium group-hover:text-gray-900">Pengaturan</span>
+                    <p class="text-xs text-gray-500 group-hover:text-gray-600">Konfigurasi</p>
+                </div>
+            </a>
+        </div>
+
+                <!-- User Profile Section -->
+        <div class="mt-8 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border border-blue-200">
+            <a href="#" onclick="logout()" class="nav-item flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-xl group transition-all duration-300">
+                <div class="w-10 h-10 bg-gray-100 group-hover:bg-red-600 rounded-lg flex items-center justify-center mr-3 transition-colors duration-300">
+                    <svg class="w-5 h-5 text-red-600 group-hover:text-white transition-colors duration-300"
+                         fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h6a1 1 0 110 2H5v10h5a1 1 0 110 2H4a1 1 0 01-1-1V4zm9.293 2.293a1 1 0 011.414 0L17 9.586a2 2 0 010 2.828l-3.293 3.293a1 1 0 01-1.414-1.414L14.586 12H9a1 1 0 110-2h5.586l-1.293-1.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <div>
+                    <span class="font-medium group-hover:text-gray-900">Keluar</span>
+                    <p class="text-xs text-gray-500 group-hover:text-gray-600">Akhiri sesi</p>
+                </div>
+            </a>
+        </div>
+    </nav>
+</div>
+
+        <!-- Overlay untuk mobile -->
+        <div id="overlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden hidden transition-opacity"></div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Header -->
+            <header class="bg-white/90 backdrop-blur-lg border-b border-gray-200 shadow-lg">
+                <div class="flex items-center justify-between h-20 px-6">
+                    <div class="flex items-center space-x-4">
+                        <button id="menuToggle" class="p-2 rounded-xl bg-gray-100 shadow-md hover:shadow-lg transition-shadow text-gray-600 hover:text-gray-800">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                            </svg>
+                        </button>
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800">Agenda Guru</h2>
+                            <div id="clock" class="text-left">
+                            <span id="date" class="text-sm font-medium" style="color: rgb(14, 79, 151);"></span>
+                            <span id="time" class="text-sm font-medium ml-2" style="color: rgb(14, 79, 151);"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <!-- User Profile -->
+                        <div class="flex items-center space-x-3 bg-gradient-to-r from-blue-50 to-purple-50 px-4 py-2 rounded-xl border border-blue-200">
+                            <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-sm shadow-md">
+                                A
+                            </div>
+                            <div class="hidden md:block">
+                                <p class="text-sm font-semibold text-gray-800" id="nama"></p>
+                                <p class="text-xs text-gray-600">Guru <span id="mapel"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+    <main class="container mx-auto px-4 py-8 max-w-7xl">
+        <!-- Header -->
+        <div class="w-full bg-white rounded-xl shadow-lg p-5 mb-6 border border-gray-100">
+        <header class="mb-8 no-print">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-800 mb-2 flex items-center gap-3">
+                        <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2-10H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V8a2 2 0 00-2-2zM9 2h6a2 2 0 012 2v2H7V4a2 2 0 012-2z"/>
+                        </svg>
+                        Data Agenda
+                    </h1>
+                    <p class="text-gray-600">Kelola jadwal mengajar dan supervisi pembelajaran</p>
+                </div>
+            </div>
+        </header>
+        </div>
+
+        <!-- Print Header (Hidden by default, shown when printing) -->
+        <div class="print-title hidden text-center mb-8">
+            <h1 class="text-2xl font-bold text-gray-800 mb-2">AGENDA GURU</h1>
+            <p class="text-gray-600">SMA Negeri 1 Jakarta</p>
+            <p class="text-gray-600">Tahun Ajaran 2023/2024</p>
+        </div>
+
+        <!-- Info Guru -->
+        <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Nama Sekolah</label>
+                    <p id="Sekolah" class="text-lg font-semibold text-gray-800"></p>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Nama Guru</label>
+                    <p id="Guru" class="text-lg font-semibold text-gray-800"></p>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Mata Pelajaran</label>
+                    <p id="Mapel" class="text-lg font-semibold text-gray-800"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter -->
+        <div class="bg-white rounded-xl shadow-sm p-6 mb-6 no-print">
+            <div class="flex flex-col md:flex-row gap-4">
+                <div class="flex-1">
+                    <label for="filter-class" class="block text-sm font-medium text-gray-700 mb-2">Kelas</label>
+                    <select id="filter-class" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <option value="">Semua Kelas</option>
+                        <option value="X">X</option>
+                        <option value="XI-A">XI-A</option>
+                        <option value="XI-B">XI-B</option>
+                        <option value="XI-C">XI-C</option>
+                        <option value="XII-A">XII-A</option>
+                        <option value="XII-B">XII-B</option>
+                        
+                    </select>
+                </div>
+                <div class="flex-1">
+                    <label for="filter-month" class="block text-sm font-medium text-gray-700 mb-2">Bulan</label>
+                    <select id="filter-month" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <option value="">Semua Bulan</option>
+                        <option value="01">Januari</option>
+                        <option value="02">Februari</option>
+                        <option value="03">Maret</option>
+                        <option value="04">April</option>
+                        <option value="05">Mei</option>
+                        <option value="06">Juni</option>
+                        <option value="07">Juli</option>
+                        <option value="08">Agustus</option>
+                        <option value="09">September</option>
+                        <option value="10">Oktober</option>
+                        <option value="11">November</option>
+                        <option value="12">Desember</option>
+                    </select>
+                </div>
+                <div class="mt-4 md:mt-0 flex gap-3">
+                    <button onclick="addNewAgenda()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 shadow-md">
+                        <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                        </svg>
+                        Tambah Agenda
+                    </button>
+                    <button onclick="printAgenda()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 shadow-md print-button">
+                        <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+                        </svg>
+                        Cetak
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pop-up Notifikasi Filter -->
+        <div id="filter-notification" class="fixed top-4 right-4 bg-blue-600 text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300 ease-in-out z-50 no-print">
+            <div class="flex items-center gap-3">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <p class="text-sm font-medium">Menampilkan Agenda Semua Kelas Untuk Semua Bulan</p>
+                <button onclick="hideNotification()" class="ml-2 text-white hover:text-gray-200">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Tabel Agenda -->
+        <div class="bg-white rounded-xl shadow-sm overflow-hidden table-container">
+            <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
+                <h3 id="table-title" class="text-lg font-semibold text-gray-800">Agenda Semua Kelas Untuk Semua Bulan</h3>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-gray-50 border-b border-gray-200">
+    <tr>
+        <th class="px-4 py-4 text-left text-sm font-semibold text-gray-700 w-20">Pertemuan Ke</th>
+        <th class="px-4 py-4 text-left text-sm font-semibold text-gray-700 w-32">Hari/Tanggal</th>
+        <th class="px-4 py-4 text-left text-sm font-semibold text-gray-700 w-20">Jam Ke</th>
+        <th id="class-header" class="px-4 py-4 text-left text-sm font-semibold text-gray-700 w-24">Kelas</th>
+        <th class="px-4 py-4 text-left text-sm font-semibold text-gray-700">Materi Ajar</th>
+
+        <!-- Kolom Baru -->
+        <th class="px-4 py-4 text-center text-sm font-semibold text-gray-700 w-20">Hadir</th>
+        <th class="px-4 py-4 text-center text-sm font-semibold text-gray-700 w-20">Sakit</th>
+        <th class="px-4 py-4 text-center text-sm font-semibold text-gray-700 w-20">Izin</th>
+        <th class="px-4 py-4 text-center text-sm font-semibold text-gray-700 w-20">Alpa</th>
+
+        <th class="px-4 py-4 text-center text-sm font-semibold text-gray-700 w-32">Paraf Supervisi</th>
+        <th class="px-4 py-4 text-center text-sm font-semibold text-gray-700 w-24 no-print">Aksi</th>
+    </tr>
+</thead>
+
+                    <tbody id="agenda-tbody" class="divide-y divide-gray-200">
+                        <!-- Data akan ditampilkan di sini -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Empty State -->
+            <div id="empty-state" class="hidden text-center py-12">
+                <div class="text-gray-400 text-6xl mb-4">📋</div>
+                <h3 class="text-lg font-medium text-gray-600 mb-2">Tidak ada agenda ditemukan</h3>
+                <p class="text-gray-500">Coba ubah filter atau tambah agenda baru</p>
+            </div>
+        </div>
+
+
+
+        <!-- Modal Pilihan Cetak -->
+        <div id="print-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 no-print">
+            <div class="bg-white rounded-xl p-6 w-full max-w-md mx-4">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">Pilihan Cetak</h2>
+                <div class="space-y-3">
+                    <button onclick="printFormalDocument()" class="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-lg font-medium transition-colors text-left">
+                        <div class="flex items-center gap-3">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2-10H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V8a2 2 0 00-2-2zM9 2h6a2 2 0 012 2v2H7V4a2 2 0 012-2z"/>
+                            </svg>
+                            <div>
+                                <div class="font-medium">Cetak Dokumen Formal</div>
+                                <div class="text-sm text-green-200">Format resmi dengan tanda tangan</div>
+                            </div>
+                        </div>
+                    </button>
+                </div>
+                <div class="flex gap-3 mt-6">
+                    <button onclick="closePrintModal()" class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+                        Batal
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal untuk tambah/edit agenda -->
+        <div id="agenda-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 no-print">
+            <div class="bg-white rounded-xl p-6 w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto">
+                <h2 id="modal-title" class="text-xl font-bold text-gray-800 mb-4">Tambah Agenda Baru</h2>
+                <form id="agenda-form" onsubmit="saveAgenda(event)">
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label for="agenda-meeting" class="block text-sm font-medium text-gray-700 mb-2">Pertemuan Ke</label>
+                            <input type="number" id="agenda-meeting" required min="1"
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label for="agenda-class" class="block text-sm font-medium text-gray-700 mb-2">Kelas</label>
+                            <select id="agenda-class" required 
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Pilih Kelas</option>
+                                <option value="X-1">X-1</option>
+                                <option value="X-2">X-2</option>
+                                <option value="XI-IPA-1">XI IPA 1</option>
+                                <option value="XI-IPA-2">XI IPA 2</option>
+                                <option value="XI-IPS-1">XI IPS 1</option>
+                                <option value="XII-IPA-1">XII IPA 1</option>
+                                <option value="XII-IPA-2">XII IPA 2</option>
+                                <option value="XII-IPS-1">XII IPS 1</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label for="agenda-date" class="block text-sm font-medium text-gray-700 mb-2">Tanggal</label>
+                            <input type="date" id="agenda-date" required 
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label for="agenda-hour" class="block text-sm font-medium text-gray-700 mb-2">Jam Ke</label>
+                            <select id="agenda-hour" required 
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Pilih Jam</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label for="agenda-material" class="block text-sm font-medium text-gray-700 mb-2">Materi Ajar</label>
+                        <textarea id="agenda-material" rows="4" required 
+                                  placeholder="Masukkan materi yang akan diajarkan..."
+                                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                    </div>
+                    
+                    <div class="flex gap-3">
+                        <button type="button" onclick="closeModal()" 
+                                class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+                            Batal
+                        </button>
+                        <button type="submit" 
+                                class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                            Simpan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- ✅ Modal baru untuk lihat data -->
+<div id="view-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 no-print">
+    <div class="bg-white/80 backdrop-blur-md rounded-2xl shadow-2xl w-11/12 max-w-5xl p-8 relative animate-fadeIn border border-white/30">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">Detail Kehadiran</h2>
+        <div id="view-content" class="space-y-3 text-sm text-gray-700"></div>
+        <button onclick="closeViewModal()" 
+                class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 text-xl font-bold">&times;</button>
+    </div>
+</div>
+    </main>
+
+    <script>
+    let editingId = null;
+
+    function updateFilterNotification() {
+        const classFilter = document.getElementById('filter-class').value;
+        const monthFilter = document.getElementById('filter-month').value;
+        const notification = document.getElementById('filter-notification');
+        const tableTitle = document.getElementById('table-title');
+
+        const monthNames = {
+            '01': 'Januari', '02': 'Februari', '03': 'Maret', '04': 'April',
+            '05': 'Mei', '06': 'Juni', '07': 'Juli', '08': 'Agustus',
+            '09': 'September', '10': 'Oktober', '11': 'November', '12': 'Desember'
+        };
+
+        let classText = classFilter ? classFilter : 'Semua Kelas';
+        let monthText = monthFilter ? monthNames[monthFilter] : 'Semua Bulan';
+
+        const message = `Menampilkan Agenda ${classText} Untuk Bulan ${monthText}`;
+        const title = `Agenda ${classText} Untuk Bulan ${monthText}`;
+
+        notification.querySelector('p').textContent = message;
+        tableTitle.textContent = title;
+
+        showNotification();
+    }
+
+    function showNotification() {
+        const notification = document.getElementById('filter-notification');
+        notification.classList.remove('translate-x-full');
+        notification.classList.add('translate-x-0');
+
+        setTimeout(() => {
+            hideNotification();
+        }, 3000);
+    }
+
+    function hideNotification() {
+        const notification = document.getElementById('filter-notification');
+        notification.classList.remove('translate-x-0');
+        notification.classList.add('translate-x-full');
+    }
+
+    function renderAgenda() {
+        const tbody = document.getElementById('agenda-tbody');
+        const emptyState = document.getElementById('empty-state');
+        const classFilter = document.getElementById('filter-class').value;
+        const monthFilter = document.getElementById('filter-month').value;
+
+        fetch("https://script.google.com/macros/s/AKfycbybJJeJ4owySyfKP_xuD_iIa6cwlISYB1SZme-dU63EHJJoXOnbZkgDt60-g65PLJhX/exec")
+    .then(response => response.json())
+    .then(agendaData => {
+
+        // >>> Tambahkan di sini <<< 
+        if (agendaData.length > 0) {
+            const firstRow = agendaData[0];
+            document.getElementById('Sekolah').textContent = firstRow['Sekolah'] || '';
+            document.getElementById('Guru').textContent = firstRow['Guru'] || '';
+            document.getElementById('Mapel').textContent = firstRow['Mapel'] || '';
+        }
+
+        // Filter data sesuai filter aktif
+        window.filteredData = agendaData.filter(item => {
+            const matchesClass = !classFilter || item.Kelas === classFilter;
+            const matchesMonth = !monthFilter || item.Tanggal.split('-')[1] === monthFilter;
+            return matchesClass && matchesMonth;
+        });
+
+        updateFilterNotification();
+
+        // ...lanjutkan render tabel seperti biasa
+
+
+                // Sort by date & meeting
+                filteredData.sort((a, b) => {
+                    const dateCompare = new Date(a.date) - new Date(b.date);
+                    if (dateCompare !== 0) return dateCompare;
+                    return a.meeting - b.meeting;
+                });
+
+                if (filteredData.length === 0) {
+                    tbody.innerHTML = '';
+                    emptyState.classList.remove('hidden');
+                    return;
+                }
+
+                emptyState.classList.add('hidden');
+
+                const classHeader = document.getElementById('class-header');
+                const showClassColumn = classFilter === '';
+                classHeader.style.display = showClassColumn ? '' : 'none';
+
+                tbody.innerHTML = filteredData.map(item => {
+    const date = new Date(item.Tanggal);
+    const dayName = date.toLocaleDateString('id-ID', { weekday: 'long' });
+    const formattedDate = date.toLocaleDateString('id-ID', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+    // Hitung total siswa dan fungsi untuk persentase
+    const totalSiswa = 
+        (parseInt(item.Hadir) || 0) + 
+        (parseInt(item.Sakit) || 0) + 
+        (parseInt(item.Izin) || 0) + 
+        (parseInt(item.Alpa) || 0);
+
+    function persen(jumlah) {
+        if (!totalSiswa || totalSiswa === 0) return '-';
+        return ((jumlah / totalSiswa) * 100).toFixed(0) + '%';
+    }
+
+    return `
+        <tr class="hover:bg-gray-50 transition-colors">
+            <td class="px-4 py-4 text-sm text-gray-900 font-medium text-center">${item.Pertemuan}</td>
+
+            <td class="px-4 py-4 text-sm text-gray-900">
+                <div class="font-medium">${dayName}</div>
+                <div class="text-gray-500">${formattedDate}</div>
+            </td>
+
+            <td class="px-4 py-4 text-sm text-gray-900 text-center font-medium">${item.Jam}</td>
+
+            <td class="px-4 py-4 text-sm text-gray-900" style="display: ${showClassColumn ? '' : 'none'}">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                    ${item.Kelas}
+                </span>
+            </td>
+
+            <td class="px-4 py-4 text-sm text-gray-900 leading-relaxed">${item.Materi}</td>
+
+            <!-- Hadir -->
+            <td class="px-4 py-4 text-sm text-center">
+                <div class="font-semibold text-green-600">${persen(item.Hadir || 0)}</div>
+                <div class="text-xs text-gray-500">${item.Hadir || 0} siswa</div>
+            </td>
+
+            <!-- Sakit -->
+            <td class="px-4 py-4 text-sm text-center">
+                <div class="font-semibold text-yellow-600">${persen(item.Sakit || 0)}</div>
+                <div class="text-xs text-gray-500">${item.Sakit || 0} siswa</div>
+            </td>
+
+            <!-- Izin -->
+            <td class="px-4 py-4 text-sm text-center">
+                <div class="font-semibold text-blue-600">${persen(item.Izin || 0)}</div>
+                <div class="text-xs text-gray-500">${item.Izin || 0} siswa</div>
+            </td>
+
+            <!-- Alpa -->
+            <td class="px-4 py-4 text-sm text-center">
+                <div class="font-semibold text-red-600">${persen(item.Alpa || 0)}</div>
+                <div class="text-xs text-gray-500">${item.Alpa || 0} siswa</div>
+            </td>
+
+            <td class="px-4 py-4 text-center">
+                <div class="signature-cell mx-auto rounded-lg flex items-center justify-center text-xs text-gray-400">
+                    Tanda Tangan
+                </div>
+            </td>
+
+            <td class="px-4 py-4 text-center no-print">
+                <div class="flex justify-center gap-2">
+                     <!-- Tombol Lihat -->
+                    <button onclick="viewAgenda(${item.Pertemuan})" 
+                            class="text-green-600 hover:text-green-800 transition-colors p-1" 
+                            title="Lihat Data">
+                        👁️
+                    </button>
+                    <button onclick="editAgenda(${item.Pertemuan})" 
+                            class="text-blue-600 hover:text-blue-800 transition-colors p-1" 
+                            title="Edit">
+                        ✏️
+                    </button>
+                    <button onclick="deleteAgenda(${item.Pertemuan})" 
+                            class="text-red-600 hover:text-red-800 transition-colors p-1" 
+                            title="Hapus">
+                        🗑️
+                    </button>
+                </div>
+            </td>
+        </tr>
+    `;
+}).join('');
+
+            })
+            .catch(err => {
+                console.error("Gagal mengambil data dari Google Sheet:", err);
+                tbody.innerHTML = '';
+                emptyState.classList.remove('hidden');
+            });
+    }
+    
+    // Event listeners
+    document.getElementById('filter-class').addEventListener('change', renderAgenda);
+    document.getElementById('filter-month').addEventListener('change', renderAgenda);
+
+    // Modal & print handling tetap sama
+    document.getElementById('agenda-modal').addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+    });
+    document.getElementById('print-modal').addEventListener('click', function(e) {
+        if (e.target === this) closePrintModal();
+    });
+
+    // Inisialisasi render
+    renderAgenda();
+
+</script>
+
+<script>
+    function addNewAgenda() {
+    // Arahkan ke halaman Input Agenda.html
+    window.location.href = "Input Agenda.html";
+}
+</script>
+
+<!-- ✅ Tambahkan script modal lihat data di bawah sini -->
+<script>
+    // Modal Lihat Data
+    function viewAgenda(pertemuan) {
+        // Gunakan variabel filteredData dari renderAgenda
+        // Jika filteredData bersifat lokal, jadikan global di atas fetch()
+        const data = window.filteredData?.find(d => d.Pertemuan == pertemuan);
+        if (!data) return;
+
+        // Ambil daftar nama siswa per kategori (pastikan kolom ada di Sheet)
+        const hadirList = (data.NamaHadir || "").split(",").map(n => n.trim()).filter(Boolean);
+        const sakitList = (data.NamaSakit || "").split(",").map(n => n.trim()).filter(Boolean);
+        const izinList  = (data.NamaIzin  || "").split(",").map(n => n.trim()).filter(Boolean);
+        const alpaList  = (data.NamaAlpa  || "").split(",").map(n => n.trim()).filter(Boolean);
+
+        // Isi modal
+        document.getElementById("view-content").innerHTML = `
+            <div><span class="font-semibold text-green-600">🟢 Hadir (${hadirList.length} siswa):</span><br>${hadirList.join(", ") || '-'}</div>
+            <div><span class="font-semibold text-yellow-600">🟡 Sakit (${sakitList.length} siswa):</span><br>${sakitList.join(", ") || '-'}</div>
+            <div><span class="font-semibold text-blue-600">🔵 Izin (${izinList.length} siswa):</span><br>${izinList.join(", ") || '-'}</div>
+            <div><span class="font-semibold text-red-600">🔴 Alpa (${alpaList.length} siswa):</span><br>${alpaList.join(", ") || '-'}</div>
+        `;
+
+        // Tampilkan modal
+        const modal = document.getElementById("view-modal");
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+    }
+
+    function closeViewModal() {
+        const modal = document.getElementById("view-modal");
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+    }
+</script>
+<script>
+  function toggleSubMenu(id) {
+      const submenu = document.getElementById(id);
+      const arrow = document.getElementById('arrow-' + id);
+
+      submenu.classList.toggle('hidden');
+      arrow.classList.toggle('rotate-180'); // animasi panah berputar
+  }
+</script>
+<script>
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+    const closeSidebar = document.getElementById('closeSidebar');
+    const overlay = document.getElementById('overlay');
+
+    function openSidebar() {
+        sidebar.classList.remove('-translate-x-full');
+        overlay.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeSidebarFunc() {
+        sidebar.classList.add('-translate-x-full');
+        overlay.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+     // tombol hamburger
+    menuToggle.addEventListener('click', openSidebar);
+    // tombol X di sidebar
+    closeSidebar.addEventListener('click', closeSidebarFunc);
+    // klik overlay
+    overlay.addEventListener('click', closeSidebarFunc);
+
+    // klik di luar sidebar
+    document.addEventListener('click', function(e) {
+        const clickInside = sidebar.contains(e.target);
+        const clickToggle = menuToggle.contains(e.target);
+        const isMobile = window.innerWidth < 1024;
+        if (!clickInside && !clickToggle && isMobile && !sidebar.classList.contains('-translate-x-full')) {
+            closeSidebarFunc();
+        }
+    });
+
+    // Saat resize, tampilkan sidebar normal di desktop
+    window.addEventListener('resize', function() {
+        if (window.innerWidth >= 1024) {
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        } else {
+            sidebar.classList.add('-translate-x-full');
+        }
+    });
+</script>
+<script>
+    function updateClock() {
+        const now = new Date();
+
+        // Format waktu: HH:MM:SS
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+
+        // Format tanggal: Rabu, 23 Oktober 2025
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const dateString = now.toLocaleDateString('id-ID', options);
+
+        document.getElementById('date').textContent = dateString + ',';
+        document.getElementById('time').textContent = `${hours}:${minutes}:${seconds}`;
+
+        // Update di bagian "Jadwal Hari Ini" (tanpa jam)
+        const tanggalJadwal = document.getElementById('tanggalJadwal');
+        if (tanggalJadwal) {
+            tanggalJadwal.textContent = dateString;
+        }
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+</script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'993fd085418b9de3',t:'MTc2MTM3NTM5MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

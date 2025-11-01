@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Siswa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .modal-animation {
+            animation: modalSlideIn 0.3s ease-out;
+        }
+        
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .nav-item {
+            transition: all 0.2s ease;
+        }    
+        .nav-item:hover {
+            transform: translateX(4px);
+        }
+        .sidebar-transition {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="h-full bg-gradient-to-br from-blue-50 to-indigo-100 font-sans">
+    <div class="flex min-h-screen">
+
+                <!-- Sidebar -->
+            <div id="sidebar"
+                class="sidebar-transition fixed inset-y-0 left-0 z-50 w-72 bg-white shadow-2xl transform -translate-x-full border-r border-gray-200 flex flex-col">
+
+                <!-- Sidebar Header -->
+            <div class="flex items-center justify-between h-20 px-6 bg-gradient-to-r from-blue-600 to-purple-600 flex-shrink-0">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center shadow-lg">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-white">MAS At-Tafsiri</h1>
+                    <p class="text-sm text-white/80">2025/2026</p>
+                </div>
+            </div>
+            <button id="closeSidebar" class="text-white hover:text-white/80 p-2 rounded-lg hover:bg-white/10">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+
+    <!-- Navigation (scrollable part) -->
+    <nav class="flex-1 overflow-y-auto px-4 py-6">
+        <div class="space-y-2">
+            
+            <a href="Dash.html" class="nav-item flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-xl group">
+                <div class="w-10 h-10 bg-gray-100 group-hover:bg-blue-600 rounded-lg flex items-center justify-center mr-3 transition-colors">
+                    <svg class="w-5 h-5 text-blue-600 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <span class="font-medium">Agenda Hari Ini</span>
+                    <p class="text-xs text-gray-500 group-hover:text-gray-600">Jadwal mengajar</p>
+                </div>
+            </a>
+
+            <a href="Jadwal.html" class="nav-item flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-xl group">
+                <div class="w-10 h-10 bg-gray-100 group-hover:bg-blue-600 rounded-lg flex items-center justify-center mr-3 transition-colors">
+                    <svg class="w-5 h-5 text-blue-600 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                </div>
+                <div>
+                    <span class="font-medium group-hover:text-gray-900">Jadwal Mengajar</span>
+                    <p class="text-xs text-gray-500 group-hover:text-gray-600">Kelola jadwal</p>
+                </div>
+            </a>
+
+            <a href="Data Siswa.html" class="nav-item flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-xl group">
+                <div class="w-10 h-10 bg-gray-100 group-hover:bg-blue-600 rounded-lg flex items-center justify-center mr-3 transition-colors">
+                    <svg class="w-5 h-5 text-blue-600 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <span class="font-medium group-hover:text-gray-900">Data Siswa</span>
+                    <p class="text-xs text-gray-500 group-hover:text-gray-600">Manajemen siswa</p>
+                </div>
+            </a>
+                    
+                    <a href="Agenda Guru.html" class="nav-item flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-xl group">
+                        <div class="w-10 h-10 bg-gray-100 group-hover:bg-blue-600 rounded-lg flex items-center justify-center mr-3 transition-colors">
+                            <svg class="w-5 h-5 text-blue group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2-10H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V8a2 2 0 00-2-2zM9 2h6a2 2 0 012 2v2H7V4a2 2 0 012-2z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <span class="font-medium">Data Agenda</span>
+                            <p class="text-xs text-gray-500 group-hover:text-gray-600">Manajemen Agenda Kegiatan</p>
+                        </div>
+                    </a>
+            <!-- item aktif -->
+            <div class="nav-item">
+                <button onclick="toggleSubMenu('laporanSubMenu')" class="w-full flex items-center px-4 py-3 text-white bg-gradient-to-r from-blue-500 to-blue-700 rounded-xl shadow-lg">
+                    <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center mr-3">
+                        <svg class="w-5 h-5 text-white-600 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                    <div class="flex justify-between items-center w-full">
+                        <div>
+                            <span class="font-medium group-hover:text-gray-900">Laporan</span>
+                            <p class="text-xs text-white/80">Analisis data</p>
+                        </div>
+                        <!-- Panah dropdown -->
+                            <svg id="arrow-laporanSubMenu" class="w-4 h-4 text-white-500 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </div>
+                </button>
+
+                <!-- 🔽 Submenu -->
+                <div id="laporanSubMenu" class="hidden pl-16 mt-2 space-y-2">
+                    <a href="Laporan Guru.html"
+                        class="flex items-center gap-2 text-gray-600 hover:text-purple-700 transition-colors px-3 py-2">
+                            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0-1.105-.895-2-2-2H6v10h4c1.105 0 2-.895 2-2v-6zM18 9h-4v10h4a2 2 0 002-2v-6a2 2 0 00-2-2z" />
+                            </svg>
+                                <span>Aktivitas Guru</span>
+                    </a>
+                    <a href="Laporan Siswa.html"
+                        class="w-full flex items-center px-4 py-1 text-white bg-gradient-to-r from-blue-500 to-green-700 rounded-xl shadow-lg">
+                            <svg class="w-4 h-4 text-gray-500 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0v6m-6-6v6m12-6v6" />
+                            </svg>
+                        <span>Laporan Siswa</span>
+                    </a>
+                    
+                </div>
+                </div>
+
+            <a href="#" class="nav-item flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-xl group">
+                <div class="w-10 h-10 bg-gray-100 group-hover:bg-orange-600 rounded-lg flex items-center justify-center mr-3 transition-colors">
+                    <svg class="w-5 h-5 text-orange-600 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <span class="font-medium group-hover:text-gray-900">Pengaturan</span>
+                    <p class="text-xs text-gray-500 group-hover:text-gray-600">Konfigurasi</p>
+                </div>
+            </a>
+        </div>
+
+                <!-- User Profile Section -->
+        <div class="mt-8 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border border-blue-200">
+            <a href="#" onclick="logout()" class="nav-item flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-xl group transition-all duration-300">
+                <div class="w-10 h-10 bg-gray-100 group-hover:bg-red-600 rounded-lg flex items-center justify-center mr-3 transition-colors duration-300">
+                    <svg class="w-5 h-5 text-red-600 group-hover:text-white transition-colors duration-300"
+                         fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h6a1 1 0 110 2H5v10h5a1 1 0 110 2H4a1 1 0 01-1-1V4zm9.293 2.293a1 1 0 011.414 0L17 9.586a2 2 0 010 2.828l-3.293 3.293a1 1 0 01-1.414-1.414L14.586 12H9a1 1 0 110-2h5.586l-1.293-1.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <div>
+                    <span class="font-medium group-hover:text-gray-900">Keluar</span>
+                    <p class="text-xs text-gray-500 group-hover:text-gray-600">Akhiri sesi</p>
+                </div>
+            </a>
+        </div>
+    </nav>
+</div>
+
+        <!-- Overlay untuk mobile -->
+        <div id="overlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden hidden transition-opacity"></div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Header -->
+            <header class="bg-white/90 backdrop-blur-lg border-b border-gray-200 shadow-lg">
+                <div class="flex items-center justify-between h-20 px-6">
+                    <div class="flex items-center space-x-4">
+                        <button id="menuToggle" class="p-2 rounded-xl bg-gray-100 shadow-md hover:shadow-lg transition-shadow text-gray-600 hover:text-gray-800">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                            </svg>
+                        </button>
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800">Agenda Guru</h2>
+                            <div id="clock" class="text-left">
+                            <span id="date" class="text-sm font-medium" style="color: rgb(14, 79, 151);"></span>
+                            <span id="time" class="text-sm font-medium ml-2" style="color: rgb(14, 79, 151);"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <!-- User Profile -->
+                        <div class="flex items-center space-x-3 bg-gradient-to-r from-blue-50 to-purple-50 px-4 py-2 rounded-xl border border-blue-200">
+                            <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-sm shadow-md">
+                                A
+                            </div>
+                            <div class="hidden md:block">
+                                <p class="text-sm font-semibold text-gray-800" id="nama"></p>
+                                <p class="text-xs text-gray-600">Guru <span id="mapel"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+    <main class="min-h-full py-8 px-4">
+        <div class="max-w-6xl mx-auto">
+            <!-- Header -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                        </svg>
+                        <div>
+                            <h1 class="text-3xl font-bold text-gray-800">Laporan Siswa</h1>
+                            <p class="text-gray-500 text-sm">Data kehadiran siswa</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter dan Kontrol -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+                <!-- Filter Kelas dan Bulan -->
+                 <p class="text-gray-600">Mata Pelajaran: <span class="font-semibold text-indigo-600">Matematika</span></p>
+                <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center mb-6">
+                    <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+                        <label for="filterKelas" class="text-sm font-medium text-gray-700 whitespace-nowrap">Filter Kelas:</label>
+                        <select id="filterKelas" onchange="filterData()" 
+                                class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors">
+                            <option value="">Semua Kelas</option>
+                            <option value="X">Kelas X</option>
+                            <option value="XI-A">Kelas XI-A</option>
+                            <option value="XI-B">Kelas XI-B</option>
+                            <option value="XII-A">Kelas XII-A</option>
+                            <option value="XII-B">Kelas XII-B</option>
+                            
+                        </select>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+                        <label for="filterBulan" class="text-sm font-medium text-gray-700 whitespace-nowrap">Filter Bulan:</label>
+                        <select id="filterBulan" onchange="filterData()" 
+                                class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors">
+                            <option value="">Semua Bulan</option>
+                            <option value="Ganjil">Semester Ganjil</option>
+                            <option value="Genap">Semester Genap</option>
+                            <option value="01">Januari</option>
+                            <option value="02">Februari</option>
+                            <option value="03">Maret</option>
+                            <option value="04">April</option>
+                            <option value="05">Mei</option>
+                            <option value="06">Juni</option>
+                            <option value="07">Juli</option>
+                            <option value="08">Agustus</option>
+                            <option value="09">September</option>
+                            <option value="10">Oktober</option>
+                            <option value="11">November</option>
+                            <option value="12">Desember</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col lg:flex-row gap-6 items-start lg:items-center">
+                    
+                    <!-- Card Style Filter Menu -->
+                    <div class="bg-gradient-to-br from-slate-50 to-gray-100 rounded-2xl p-6 border border-gray-200 shadow-lg">
+                        <!-- Header dengan Icon -->
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="p-2 bg-indigo-500 rounded-xl shadow-md">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-gray-800">Filter Analisis</h3>
+                                <p class="text-sm text-gray-600">Pilih kategori untuk melihat data spesifik</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Filter Buttons -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <!-- Kehadiran Terbaik -->
+                            <button onclick="show10Besar('hadir')" 
+                                    class="btn-10besar group bg-white hover:bg-green-500 text-gray-700 hover:text-white font-semibold py-4 px-5 rounded-xl transition-all duration-300 shadow-md hover:shadow-xl border-2 border-transparent hover:border-green-400 transform hover:-translate-y-1">
+                                <div class="flex items-center justify-center gap-3">
+                                    <svg class="w-6 h-6 text-green-600 group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <span class="text-sm">Kehadiran Terbaik</span>
+                                </div>
+                            </button>
+                            
+                            <!-- Tidak Hadir -->
+                            <button onclick="show10Besar('tidak_hadir')" 
+                                    class="btn-10besar group bg-white hover:bg-red-500 text-gray-700 hover:text-white font-semibold py-4 px-5 rounded-xl transition-all duration-300 shadow-md hover:shadow-xl border-2 border-transparent hover:border-red-400 transform hover:-translate-y-1">
+                                <div class="flex items-center justify-center gap-3">
+                                    <svg class="w-6 h-6 text-red-600 group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                                    </svg>
+                                    <span class="text-sm">Tidak Hadir</span>
+                                </div>
+                            </button>
+                            
+                            <!-- Reset -->
+                            <button onclick="resetToOriginal()" 
+                                    class="group bg-white hover:bg-gray-600 text-gray-700 hover:text-white font-semibold py-4 px-5 rounded-xl transition-all duration-300 shadow-md hover:shadow-xl border-2 border-transparent hover:border-gray-400 transform hover:-translate-y-1">
+                                <div class="flex items-center justify-center gap-3">
+                                    <svg class="w-6 h-6 text-gray-600 group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                                    </svg>
+                                    <span class="text-sm">Reset Filter</span>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="flex-1"></div>
+                </div>
+                
+                <!-- Total Siswa dan Tombol Refresh -->
+                <div class="mt-4 flex justify-between items-center">
+                    <div class="bg-indigo-50 px-4 py-2 rounded-lg border border-indigo-200">
+                        <span class="text-sm text-gray-700">Total Siswa: <span id="totalSiswa" class="font-semibold text-indigo-600">0</span></span>
+                    </div>
+                    
+                    <button onclick="refreshData()" 
+                            class="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                        </svg>
+                        <span class="text-sm font-medium">Refresh Data</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Judul Tabel dengan Status Filter -->
+            <div class="bg-white rounded-t-xl shadow-lg px-6 py-4 border-b border-gray-200">
+                <div class="flex items-center gap-3">
+                    <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <h2 id="filterStatus" class="text-xl font-bold text-gray-800"></h2>
+                </div>
+            </div>
+
+            <!-- Tabel Data Siswa -->
+            <div class="bg-white rounded-b-xl shadow-lg overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead id="tableHeader">
+                            <tr class="bg-gradient-to-r from-indigo-50 to-blue-50 border-b border-gray-200">
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700 w-16 border-r border-gray-200">No</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700 border-r border-gray-200">Nama Siswa</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700 w-24 border-r border-gray-200">Kelas</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700 border-r border-gray-200">Jenis Kelamin</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700 w-20 border-r border-gray-200">Hadir</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700 w-20 border-r border-gray-200">Sakit</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700 w-20 border-r border-gray-200">Ijin</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700 w-20 border-r border-gray-200">Alpa</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700 w-20">Tidak Hadir</th>
+                            </tr>
+                        </thead>
+                        <tbody id="siswaTableBody" class="divide-y divide-gray-100">
+                            <!-- Data akan dimuat di sini -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Notification -->
+        <div id="successNotification" class="hidden fixed top-4 right-4 bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg z-50">
+            <div class="flex items-center gap-3">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span id="notificationText">Data berhasil disimpan!</span>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Konfigurasi Google Apps Script Web App
+        const GOOGLE_APPS_SCRIPT_CONFIG = {
+            // URL Web App Anda dari Google Apps Script - GANTI DENGAN URL ANDA!
+            webAppUrl: 'https://script.google.com/macros/s/AKfycbxoSsT2Lkk6Til0Etjm_ic-5R9EbJieVgQMD4_KwdlHLC4kjBmn9cWEy2FcbKe9U9q_/exec'
+        };
+
+        // Data siswa (akan diisi dari Google Apps Script)
+        let dataSiswa = [];
+        let dataSiswaAsli = []; // data mentah (per-bulan) — hasil mapColumnData()
+        let dataSiswaGabung = []; // data gabungan (hasil consolidateStudentData)
+
+        
+        // Data contoh sebagai fallback jika Google Apps Script tidak tersedia
+        const dataSiswaContohRaw = [
+            // Data siswa yang sama di bulan berbeda untuk testing consolidation
+            { nama: 'Ahmad Rizki Pratama', kelas: '7A', jenisKelamin: 'Laki-laki', bulan: '01', hadir: 18, sakit: 1, ijin: 0, alpa: 1 },
+            { nama: 'Ahmad Rizki Pratama', kelas: '7A', jenisKelamin: 'Laki-laki', bulan: '02', hadir: 19, sakit: 0, ijin: 1, alpa: 0 },
+            { nama: 'Ahmad Rizki Pratama', kelas: '7A', jenisKelamin: 'Laki-laki', bulan: '03', hadir: 17, sakit: 2, ijin: 0, alpa: 1 },
+            
+            { nama: 'Siti Nurhaliza Putri', kelas: '7A', jenisKelamin: 'Perempuan', bulan: '01', hadir: 20, sakit: 0, ijin: 0, alpa: 0 },
+            { nama: 'Siti Nurhaliza Putri', kelas: '7A', jenisKelamin: 'Perempuan', bulan: '02', hadir: 18, sakit: 1, ijin: 1, alpa: 0 },
+            
+            { nama: 'Budi Santoso', kelas: '7A', jenisKelamin: 'Laki-laki', bulan: '01', hadir: 17, sakit: 2, ijin: 1, alpa: 0 },
+            { nama: 'Budi Santoso', kelas: '7A', jenisKelamin: 'Laki-laki', bulan: '03', hadir: 16, sakit: 1, ijin: 2, alpa: 1 },
+            
+            { nama: 'Dewi Sartika', kelas: '7A', jenisKelamin: 'Perempuan', bulan: '01', hadir: 19, sakit: 0, ijin: 1, alpa: 0 },
+            { nama: 'Eko Prasetyo', kelas: '7B', jenisKelamin: 'Laki-laki', bulan: '02', hadir: 16, sakit: 1, ijin: 0, alpa: 3 },
+            { nama: 'Fitri Handayani', kelas: '7B', jenisKelamin: 'Perempuan', bulan: '03', hadir: 19, sakit: 1, ijin: 0, alpa: 0 },
+            
+            { nama: 'Gilang Ramadhan', kelas: '8A', jenisKelamin: 'Laki-laki', bulan: '01', hadir: 18, sakit: 0, ijin: 2, alpa: 0 },
+            { nama: 'Gilang Ramadhan', kelas: '8A', jenisKelamin: 'Laki-laki', bulan: '02', hadir: 20, sakit: 0, ijin: 0, alpa: 0 },
+            
+            { nama: 'Hana Pertiwi', kelas: '8A', jenisKelamin: 'Perempuan', bulan: '02', hadir: 20, sakit: 0, ijin: 0, alpa: 0 },
+            { nama: 'Indra Gunawan', kelas: '8B', jenisKelamin: 'Laki-laki', bulan: '03', hadir: 15, sakit: 2, ijin: 1, alpa: 2 },
+            { nama: 'Jihan Aulia', kelas: '8B', jenisKelamin: 'Perempuan', bulan: '01', hadir: 19, sakit: 1, ijin: 0, alpa: 0 },
+            { nama: 'Krisna Wijaya', kelas: '9A', jenisKelamin: 'Laki-laki', bulan: '02', hadir: 17, sakit: 1, ijin: 1, alpa: 1 },
+            { nama: 'Lestari Dewi', kelas: '9A', jenisKelamin: 'Perempuan', bulan: '03', hadir: 20, sakit: 0, ijin: 0, alpa: 0 },
+            { nama: 'Muhammad Fadil', kelas: '9B', jenisKelamin: 'Laki-laki', bulan: '01', hadir: 16, sakit: 2, ijin: 0, alpa: 2 },
+            { nama: 'Nadia Putri', kelas: '9B', jenisKelamin: 'Perempuan', bulan: '02', hadir: 18, sakit: 1, ijin: 1, alpa: 0 },
+            
+            // Tambahan data untuk bulan April-Desember
+            { nama: 'Andi Setiawan', kelas: '7A', jenisKelamin: 'Laki-laki', bulan: '04', hadir: 19, sakit: 0, ijin: 1, alpa: 0 },
+            { nama: 'Rina Sari', kelas: '8A', jenisKelamin: 'Perempuan', bulan: '05', hadir: 18, sakit: 1, ijin: 0, alpa: 1 },
+            { nama: 'Doni Pratama', kelas: '9A', jenisKelamin: 'Laki-laki', bulan: '06', hadir: 20, sakit: 0, ijin: 0, alpa: 0 },
+            { nama: 'Maya Putri', kelas: '7B', jenisKelamin: 'Perempuan', bulan: '07', hadir: 17, sakit: 2, ijin: 1, alpa: 0 },
+            { nama: 'Rudi Hermawan', kelas: '8B', jenisKelamin: 'Laki-laki', bulan: '08', hadir: 16, sakit: 1, ijin: 2, alpa: 1 },
+            { nama: 'Sari Indah', kelas: '9B', jenisKelamin: 'Perempuan', bulan: '09', hadir: 19, sakit: 1, ijin: 0, alpa: 0 },
+            { nama: 'Bayu Saputra', kelas: '7A', jenisKelamin: 'Laki-laki', bulan: '10', hadir: 18, sakit: 0, ijin: 1, alpa: 1 },
+            { nama: 'Lina Wati', kelas: '8A', jenisKelamin: 'Perempuan', bulan: '11', hadir: 20, sakit: 0, ijin: 0, alpa: 0 },
+            { nama: 'Agus Santoso', kelas: '9A', jenisKelamin: 'Laki-laki', bulan: '12', hadir: 17, sakit: 2, ijin: 0, alpa: 1 }
+        ];
+        
+        // Consolidate data contoh akan dilakukan setelah fungsi didefinisikan
+        let dataSiswaContoh = [];
+
+        // Fungsi untuk memetakan kolom dari Google Sheets ke format yang dibutuhkan
+        function mapColumnData(rawData) {
+            if (!rawData || rawData.length === 0) return [];
+            
+            const firstRow = rawData[0];
+            const availableColumns = Object.keys(firstRow);
+            
+            console.log('=== COLUMN MAPPING DEBUG ===');
+            console.log('Available columns:', availableColumns);
+            console.log('Sample data:', firstRow);
+            
+            // Mapping berbagai kemungkinan nama kolom
+            const columnMappings = {
+                nama: ['nama', 'Nama', 'NAMA', 'name', 'Name', 'Nama Siswa', 'nama_siswa'],
+                kelas: ['kelas', 'Kelas', 'KELAS', 'class', 'Class'],
+                jenisKelamin: ['jenisKelamin', 'jenis_kelamin', 'Jenis Kelamin', 'JENIS KELAMIN', 'gender', 'Gender', 'JK', 'jk'],
+                bulan: ['bulan', 'Bulan', 'BULAN', 'month', 'Month', 'bln', 'tanggal', 'Tanggal', 'TANGGAL', 'date', 'Date', 'tgl'],
+                hadir: ['hadir', 'Hadir', 'HADIR', 'present', 'Present'],
+                sakit: ['sakit', 'Sakit', 'SAKIT', 'sick', 'Sick'],
+                ijin: ['ijin', 'Ijin', 'IJIN', 'izin', 'Izin', 'IZIN', 'permission', 'Permission'],
+                alpa: ['alpa', 'Alpa', 'ALPA', 'alpha', 'Alpha', 'absent', 'Absent']
+            };
+            
+            // Deteksi kolom yang sesuai
+            const detectedColumns = {};
+            
+            for (const [targetColumn, possibleNames] of Object.entries(columnMappings)) {
+                for (const possibleName of possibleNames) {
+                    if (availableColumns.includes(possibleName)) {
+                        detectedColumns[targetColumn] = possibleName;
+                        console.log(`✅ ${targetColumn} -> ${possibleName}`);
+                        break;
+                    }
+                }
+                
+                if (!detectedColumns[targetColumn]) {
+                    console.log(`❌ ${targetColumn} -> TIDAK DITEMUKAN`);
+                }
+            }
+            
+            // Jika tidak ada kolom bulan, coba deteksi berdasarkan posisi atau pattern
+            if (!detectedColumns.bulan) {
+                console.log('--- MENCARI KOLOM BULAN BERDASARKAN PATTERN ---');
+                for (const col of availableColumns) {
+                    const sampleValue = firstRow[col];
+                    console.log(`Checking column "${col}" with value:`, sampleValue, typeof sampleValue);
+                    
+                    if (sampleValue !== null && sampleValue !== undefined && sampleValue !== '') {
+                        const valueStr = String(sampleValue).trim();
+                        
+                        // Cek apakah berisi pattern bulan (01-12, Januari-Desember, Jan-Des)
+                        if (valueStr.match(/^(0[1-9]|1[0-2])$/) || 
+                            valueStr.match(/^(Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember)$/i) ||
+                            valueStr.match(/^(Jan|Feb|Mar|Apr|Mei|Jun|Jul|Agu|Sep|Okt|Nov|Des)$/i) ||
+                            valueStr.match(/^[1-9]$/) ||
+                            valueStr.match(/^1[0-2]$/)) {
+                            detectedColumns.bulan = col;
+                            console.log(`✅ bulan (by pattern) -> ${col} (value: ${valueStr})`);
+                            break;
+                        }
+                    }
+                }
+            }
+            
+            console.log('Final column mapping:', detectedColumns);
+            
+            // Transform data menggunakan mapping yang terdeteksi
+            const mappedData = rawData.map((row, index) => {
+                let bulanValue = row[detectedColumns.bulan] || '';
+                
+                console.log(`Processing row ${index + 1}, original bulan value:`, bulanValue, typeof bulanValue);
+                
+                // Konversi bulan ke format 01-12
+                if (bulanValue !== null && bulanValue !== undefined && bulanValue !== '') {
+                    const valueStr = String(bulanValue).trim();
+                    
+                    // Jika sudah format Date object, extract bulan
+                    if (bulanValue instanceof Date) {
+                        const month = bulanValue.getMonth() + 1; // getMonth() returns 0-11
+                        bulanValue = month < 10 ? '0' + month : String(month);
+                        console.log(`  Date object converted to: ${bulanValue}`);
+                    }
+                    // Jika string nama bulan
+                    else if (typeof bulanValue === 'string') {
+                        const monthNames = {
+                            'januari': '01', 'februari': '02', 'maret': '03', 'april': '04',
+                            'mei': '05', 'juni': '06', 'juli': '07', 'agustus': '08',
+                            'september': '09', 'oktober': '10', 'november': '11', 'desember': '12',
+                            'jan': '01', 'feb': '02', 'mar': '03', 'apr': '04',
+                            'jun': '06', 'jul': '07', 'agu': '08', 'sep': '09',
+                            'okt': '10', 'nov': '11', 'des': '12'
+                        };
+                        
+                        const lowerMonth = valueStr.toLowerCase();
+                        if (monthNames[lowerMonth]) {
+                            bulanValue = monthNames[lowerMonth];
+                            console.log(`  Month name "${valueStr}" converted to: ${bulanValue}`);
+                        } else if (valueStr.match(/^[1-9]$/)) {
+                            // Tambahkan 0 di depan untuk bulan 1-9
+                            bulanValue = '0' + valueStr;
+                            console.log(`  Single digit "${valueStr}" converted to: ${bulanValue}`);
+                        } else if (valueStr.match(/^(0[1-9]|1[0-2])$/)) {
+                            // Sudah format yang benar
+                            bulanValue = valueStr;
+                            console.log(`  Already correct format: ${bulanValue}`);
+                        } else {
+                            console.log(`  ⚠️ Unrecognized month format: "${valueStr}"`);
+                            bulanValue = '';
+                        }
+                    }
+                    // Jika number
+                    else if (typeof bulanValue === 'number') {
+                        const monthNum = Math.floor(bulanValue);
+                        if (monthNum >= 1 && monthNum <= 12) {
+                            bulanValue = monthNum < 10 ? '0' + monthNum : String(monthNum);
+                            console.log(`  Number ${monthNum} converted to: ${bulanValue}`);
+                        } else {
+                            console.log(`  ⚠️ Invalid month number: ${monthNum}`);
+                            bulanValue = '';
+                        }
+                    }
+                } else {
+                    bulanValue = '';
+                    console.log(`  Empty or null value, set to empty string`);
+                }
+                
+                const mappedRow = {
+                    nama: row[detectedColumns.nama] || `Siswa ${index + 1}`,
+                    kelas: row[detectedColumns.kelas] || 'Unknown',
+                    jenisKelamin: row[detectedColumns.jenisKelamin] || 'Unknown',
+                    bulan: bulanValue,
+                    hadir: parseInt(row[detectedColumns.hadir]) || 0,
+                    sakit: parseInt(row[detectedColumns.sakit]) || 0,
+                    ijin: parseInt(row[detectedColumns.ijin]) || 0,
+                    alpa: parseInt(row[detectedColumns.alpa]) || 0
+                };
+                
+                // Debug untuk beberapa row pertama
+                if (index < 5) {
+                    console.log(`--- MAPPED ROW ${index + 1} ---`);
+                    console.log('Original bulan:', row[detectedColumns.bulan]);
+                    console.log('Processed bulan:', mappedRow.bulan);
+                    console.log('Full mapped row:', mappedRow);
+                }
+                
+                return mappedRow;
+            });
+            
+            // Debug final hasil mapping
+            console.log('=== FINAL MAPPING RESULTS ===');
+            console.log('Total mapped rows:', mappedData.length);
+            
+            // Tampilkan unique bulan values
+            const uniqueMonths = [...new Set(mappedData.map(row => row.bulan))].filter(m => m !== '');
+            console.log('Unique month values found:', uniqueMonths);
+            
+            return mappedData;
+        }
+
+        // Fungsi untuk menggabungkan data siswa yang sama (nama + kelas) dari berbagai bulan
+        function consolidateStudentData(mappedData) {
+            console.log('=== CONSOLIDATING STUDENT DATA ===');
+            console.log('Data sebelum consolidate:', mappedData.length);
+            
+            const consolidatedMap = new Map();
+            
+            mappedData.forEach((siswa, index) => {
+                // Gunakan kombinasi nama + kelas sebagai key unik
+                const key = `${siswa.nama.trim().toLowerCase()}_${siswa.kelas.trim()}`;
+                
+                if (consolidatedMap.has(key)) {
+                    // Siswa sudah ada, jumlahkan data kehadiran
+                    const existing = consolidatedMap.get(key);
+                    existing.hadir += siswa.hadir;
+                    existing.sakit += siswa.sakit;
+                    existing.ijin += siswa.ijin;
+                    existing.alpa += siswa.alpa;
+                    
+                    // Simpan bulan-bulan yang ada untuk referensi
+                    if (!existing.bulanList) {
+                        existing.bulanList = [];
+                    }
+                    if (siswa.bulan && !existing.bulanList.includes(siswa.bulan)) {
+                        existing.bulanList.push(siswa.bulan);
+                    }
+                    
+                    console.log(`Menggabungkan data ${siswa.nama} (${siswa.kelas}) bulan ${siswa.bulan}`);
+                    console.log(`  Total sekarang - Hadir: ${existing.hadir}, Sakit: ${existing.sakit}, Ijin: ${existing.ijin}, Alpa: ${existing.alpa}`);
+                } else {
+                    // Siswa baru, buat entry baru
+                    const newEntry = {
+                        nama: siswa.nama,
+                        kelas: siswa.kelas,
+                        jenisKelamin: siswa.jenisKelamin,
+                        bulan: siswa.bulan, // Bulan pertama yang ditemukan
+                        hadir: siswa.hadir,
+                        sakit: siswa.sakit,
+                        ijin: siswa.ijin,
+                        alpa: siswa.alpa,
+                        bulanList: siswa.bulan ? [siswa.bulan] : []
+                    };
+                    
+                    consolidatedMap.set(key, newEntry);
+                    console.log(`Menambah siswa baru: ${siswa.nama} (${siswa.kelas})`);
+                }
+            });
+            
+            const consolidatedData = Array.from(consolidatedMap.values());
+            
+            console.log('=== HASIL CONSOLIDATION ===');
+            console.log('Data setelah consolidate:', consolidatedData.length);
+            
+            // Debug beberapa contoh hasil consolidation
+            consolidatedData.slice(0, 3).forEach((siswa, index) => {
+                console.log(`Siswa ${index + 1}: ${siswa.nama} (${siswa.kelas})`);
+                console.log(`  Total - Hadir: ${siswa.hadir}, Sakit: ${siswa.sakit}, Ijin: ${siswa.ijin}, Alpa: ${siswa.alpa}`);
+                console.log(`  Bulan yang tercakup: ${siswa.bulanList.join(', ')}`);
+            });
+            
+            return consolidatedData;
+        }
+
+        // Fungsi untuk mengambil data dari Google Apps Script
+        async function loadDataFromGoogleAppsScript() {
+            try {
+                showLoadingState(true);
+                
+                const url = `${GOOGLE_APPS_SCRIPT_CONFIG.webAppUrl}?action=getAllData`;
+                
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const result = await response.json();
+                
+                console.log('=== DEBUG DATA DARI GOOGLE SHEETS ===');
+                console.log('Response dari Google Apps Script:', result);
+                
+                if (result.success && result.data) {
+                    console.log('Jumlah data yang diterima:', result.data.length);
+                    
+                    // Debug struktur data asli
+                    if (result.data.length > 0) {
+                        console.log('--- STRUKTUR DATA ASLI ---');
+                        console.log('Data ke-1:', result.data[0]);
+                        console.log('Keys/kolom yang tersedia:', Object.keys(result.data[0]));
+                    }
+                    
+                    // Map data ke format yang benar
+                        const mappedData = mapColumnData(result.data);
+
+                    // Simpan data mentah per-bulan
+                        dataSiswaAsli = [...mappedData];
+
+                    // Gabungkan data siswa yang sama dari berbagai bulan
+                        dataSiswaGabung = consolidateStudentData(mappedData);
+
+                    // Default tampilan awal: gunakan data gabungan (semua bulan)
+                        dataSiswa = [...dataSiswaGabung];
+
+                    
+                    console.log('--- HASIL MAPPING ---');
+                    console.log('Total data setelah mapping:', dataSiswa.length);
+                    if (dataSiswa.length > 0) {
+                        console.log('Sample mapped data:', dataSiswa[0]);
+                    }
+                    
+                    showNotification('Data berhasil dimuat dan dipetakan dari Google Apps Script!');
+                } else {
+                    throw new Error(result.message || 'Data tidak ditemukan');
+                }
+                
+            } catch (error) {
+                console.error('Error loading data from Google Apps Script:', error);
+                console.log('=== MENGGUNAKAN DATA CONTOH ===');
+                
+        // Data contoh: simpan versi asli dan versi gabung
+                dataSiswaAsli = [...dataSiswaContohRaw]; // data per-bulan
+                dataSiswaGabung = consolidateStudentData(dataSiswaContohRaw);
+                dataSiswa = [...dataSiswaGabung];
+
+                
+                showNotification('Menggunakan data contoh karena gagal memuat dari Google Apps Script', 'warning');
+            } finally {
+                showLoadingState(false);
+            }
+        }
+
+        // Fungsi untuk menampilkan loading state
+        function showLoadingState(isLoading) {
+            const tableBody = document.getElementById('siswaTableBody');
+            const totalSiswa = document.getElementById('totalSiswa');
+            
+            if (isLoading) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="9" class="px-6 py-8 text-center">
+                            <div class="flex items-center justify-center gap-3">
+                                <svg class="animate-spin h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                <span class="text-gray-600">Memuat data dari Google Apps Script...</span>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                totalSiswa.textContent = '...';
+            }
+        }
+
+        let deleteIndex = -1;
+        let filteredData = [...dataSiswa];
+
+        // Load data saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', async function() {
+            updateTableHeader();
+            await loadDataFromGoogleAppsScript();
+            filteredData = [...dataSiswa];
+            loadSiswaData();
+        });
+
+        function updateTableHeader() {
+            const tableHeader = document.getElementById('tableHeader');
+            
+            let headerHtml = `
+                <tr class="bg-gradient-to-r from-indigo-50 to-blue-50 border-b border-gray-200">
+                    <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700 w-16 border-r border-gray-200">No</th>
+                    <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700 border-r border-gray-200">Nama Siswa</th>
+            `;
+            
+            // Header berdasarkan filter yang aktif
+            if (currentFilter === 'hadir') {
+                headerHtml += `
+                <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700 w-24 border-r border-gray-200">Kelas</th>
+                <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700 w-32">Persentase Kehadiran</th>`;
+            } else if (currentFilter === 'tidak_hadir') {
+                headerHtml += `
+                <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700 w-24 border-r border-gray-200">Kelas</th>
+                <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700 w-32">Persentase Tidak Hadir</th>
+                    
+                `;
+            } else {
+                // Header default (data awal)
+                headerHtml += `
+                    <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700 w-24 border-r border-gray-200">Kelas</th>
+                    <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700 border-r border-gray-200">Jenis Kelamin</th>
+                    <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700 w-20 border-r border-gray-200">Hadir</th>
+                    <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700 w-20 border-r border-gray-200">Sakit</th>
+                    <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700 w-20 border-r border-gray-200">Ijin</th>
+                    <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700 w-20 border-r border-gray-200">Alpa</th>
+                    <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700 w-20">Tidak Hadir</th>
+                `;
+            }
+            
+            headerHtml += `</tr>`;
+            tableHeader.innerHTML = headerHtml;
+        }
+
+        let currentFilter = '';
+
+    function loadSiswaData() {
+            const tableBody = document.getElementById('siswaTableBody');
+            const totalSiswa = document.getElementById('totalSiswa');
+            const filterStatus = document.getElementById('filterStatus');
+    
+            tableBody.innerHTML = '';
+            let sumberData = filteredData && filteredData.length > 0 ? [...filteredData] : [...dataSiswa]; // clone array biar aman
+
+    // === Urutkan data sesuai filter aktif ===
+    sumberData.sort((a, b) => {
+        const totalA = a.hadir + a.sakit + a.ijin + a.alpa;
+        const totalB = b.hadir + b.sakit + b.ijin + b.alpa;
+        const persenHadirA = totalA > 0 ? (a.hadir / totalA) * 100 : 0;
+        const persenHadirB = totalB > 0 ? (b.hadir / totalB) * 100 : 0;
+        const tidakHadirA = a.sakit + a.ijin + a.alpa;
+        const tidakHadirB = b.sakit + b.ijin + b.alpa;
+        const persenTidakHadirA = totalA > 0 ? (tidakHadirA / totalA) * 100 : 0;
+        const persenTidakHadirB = totalB > 0 ? (tidakHadirB / totalB) * 100 : 0;
+
+        if (currentFilter === 'hadir') {
+            return persenHadirB - persenHadirA; // urut menurun
+        } else if (currentFilter === 'tidak_hadir') {
+            return persenTidakHadirB - persenTidakHadirA; // urut menurun
+        } else {
+            // Urut berdasarkan kelas dulu, lalu nama di dalam kelas
+            if (a.kelas < b.kelas) return -1;
+            if (a.kelas > b.kelas) return 1;
+            return a.nama.localeCompare(b.nama); // default urut nama
+        }
+    });
+
+    sumberData.forEach((siswa, index) => {
+        const totalKehadiran = siswa.hadir + siswa.sakit + siswa.ijin + siswa.alpa;
+        const persentaseHadir = totalKehadiran > 0 ? ((siswa.hadir / totalKehadiran) * 100).toFixed(1) : 0;
+        const tidakHadir = siswa.sakit + siswa.ijin + siswa.alpa;
+        const persentaseTidakHadir = totalKehadiran > 0 ? ((tidakHadir / totalKehadiran) * 100).toFixed(1) : 0;
+
+        const row = document.createElement('tr');
+        row.className = 'hover:bg-gray-50';
+
+        let columnsHtml = `
+            <td class="px-6 py-4 text-center text-sm font-medium text-gray-900 border-r border-gray-200">${index + 1}</td>
+            <td class="px-6 py-4 text-left text-sm font-medium text-gray-900 border-r border-gray-200">${siswa.nama}</td>
+        `;
+
+        if (currentFilter === 'hadir') {
+    columnsHtml += `
+        <td class="px-6 py-4 text-center text-sm text-gray-900 border-r border-gray-200">${siswa.kelas || '-'}</td>
+        <td class="px-6 py-4 text-center text-sm text-gray-900">
+            <span class="text-green-600 font-bold text-lg">${persentaseHadir}%</span>
+            <div class="text-xs text-gray-500 mt-1">${siswa.hadir} dari ${totalKehadiran} hari</div>
+        </td>
+    `;
+} else if (currentFilter === 'tidak_hadir') {
+    columnsHtml += `
+        <td class="px-6 py-4 text-center text-sm text-gray-900 border-r border-gray-200">${siswa.kelas || '-'}</td>
+        <td class="px-6 py-4 text-center text-sm text-gray-900">
+            <span class="text-red-600 font-bold text-lg">${persentaseTidakHadir}%</span>
+            <div class="text-xs text-gray-500 mt-1">${tidakHadir} dari ${totalKehadiran} hari</div>
+        </td>
+    `;
+} else {
+    // ... (bagian aslimu untuk tampilan default tetap sama)
+
+            const bulanInfo = siswa.bulanList && siswa.bulanList.length > 0 
+                ? `${siswa.bulanList.length} bulan` 
+                : (siswa.bulan ? getMonthName(siswa.bulan) : 'N/A');
+
+            columnsHtml += `
+                <td class="px-6 py-4 text-center text-sm text-gray-900 border-r border-gray-200">
+                    <span class="bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full text-xs font-medium">${siswa.kelas}</span>
+                </td>
+                <td class="px-6 py-4 text-center text-sm text-gray-900 border-r border-gray-200">
+                    <div>${siswa.jenisKelamin}</div>
+                    <div class="text-xs text-gray-500 mt-1">${bulanInfo}</div>
+                </td>
+                <td class="px-6 py-4 text-center text-sm text-gray-900 border-r border-gray-200">
+                    <span class="text-green-600 font-medium">${persentaseHadir}%</span>
+                    <div class="text-xs text-gray-500">(${siswa.hadir})</div>
+                </td>
+                <td class="px-6 py-4 text-center text-sm text-gray-900 border-r border-gray-200">
+                    <span class="text-yellow-600 font-medium">${siswa.sakit}</span>
+                </td>
+                <td class="px-6 py-4 text-center text-sm text-gray-900 border-r border-gray-200">
+                    <span class="text-blue-600 font-medium">${siswa.ijin}</span>
+                </td>
+                <td class="px-6 py-4 text-center text-sm text-gray-900 border-r border-gray-200">
+                    <span class="text-red-600 font-medium">${siswa.alpa}</span>
+                </td>
+                <td class="px-6 py-4 text-center text-sm text-gray-900">
+                    <span class="text-gray-600 font-medium">${persentaseTidakHadir}%</span>
+                    <div class="text-xs text-gray-500">(${tidakHadir})</div>
+                </td>
+            `;
+        }
+
+        row.innerHTML = columnsHtml;
+        tableBody.appendChild(row);
+    });
+
+    totalSiswa.textContent = sumberData.length;
+    updateTableHeader();
+    updateFilterStatus();
+}
+
+       function updateFilterStatus() {
+    const statusEl = document.getElementById('filterStatus');
+    if (!statusEl) return; // aman bila elemen tidak ada
+
+    const kelasEl = document.getElementById('filterKelas');
+    const bulanEl = document.getElementById('filterBulan');
+
+    const filterKelas = (kelasEl && kelasEl.value) ? String(kelasEl.value).trim() : '';
+    let filterBulan = (bulanEl && bulanEl.value) ? String(bulanEl.value).trim() : '';
+
+    // Anggap nilai 'Semua' atau kosong berarti tidak ada filter bulan
+    if (!filterBulan || filterBulan.toLowerCase() === 'semua') {
+        filterBulan = '';
+    }
+
+    let statusText = '';
+
+    // Tentukan teks utama sesuai filter aktif
+    if (currentFilter === 'hadir') {
+        statusText = '10 Besar Kehadiran Terbaik';
+    } else if (currentFilter === 'tidak_hadir') {
+        statusText = '10 Besar Ketidakhadiran Terbanyak';
+    } else {
+        statusText = 'Data Semua Siswa';
+    }
+
+    // Tambahkan informasi filter kelas dan bulan (format natural)
+    if (filterKelas && filterBulan) {
+        const monthName = typeof getMonthName === 'function' ? getMonthName(filterBulan) : filterBulan;
+        statusText += ` Kelas ${filterKelas} di Bulan ${monthName}`;
+    } else if (filterKelas) {
+        statusText += ` Kelas ${filterKelas}`;
+    } else if (filterBulan) {
+        const monthName = typeof getMonthName === 'function' ? getMonthName(filterBulan) : filterBulan;
+        statusText += ` di Bulan ${monthName}`;
+    }
+
+    statusEl.textContent = statusText;
+}
+
+
+
+        function filterData() {
+    const filterKelas = document.getElementById('filterKelas').value;
+    const filterBulan = document.getElementById('filterBulan').value;
+
+    console.log('=== FILTER DATA DEBUG ===');
+    console.log('Filter Kelas:', filterKelas);
+    console.log('Filter Bulan:', filterBulan);
+    console.log('Total data siswa:', dataSiswa.length);
+    console.log('Contoh data siswa:', dataSiswaAsli[0]); // cek format bulan
+
+    // Jika sedang dalam mode 10 besar, jalankan ulang show10Besar
+    if (currentFilter !== '') {
+        show10Besar(currentFilter);
+        return;
+    }
+
+    // Tentukan sumber data (per bulan, semester, atau gabungan)
+    let sumberData = [];
+
+    if (filterBulan && filterBulan !== 'Semua') {
+        // Definisi daftar bulan semester
+        const bulanGanjil = ['Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember', '07', '08', '09', '10', '11', '12'];
+        const bulanGenap  = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', '01', '02', '03', '04', '05', '06'];
+
+        if (filterBulan === 'Ganjil') {
+            sumberData = dataSiswaAsli.filter(siswa => bulanGanjil.includes(String(siswa.bulan).trim()));
+            console.log('Menggunakan data Semester Ganjil (Juli–Desember):', sumberData.length);
+        } 
+        else if (filterBulan === 'Genap') {
+            sumberData = dataSiswaAsli.filter(siswa => bulanGenap.includes(String(siswa.bulan).trim()));
+            console.log('Menggunakan data Semester Genap (Januari–Juni):', sumberData.length);
+        } 
+        else {
+            sumberData = dataSiswaAsli.filter(siswa => siswa.bulan === filterBulan);
+            console.log('Menggunakan data per-bulan:', filterBulan, 'Jumlah:', sumberData.length);
+        }
+    } 
+    else {
+        sumberData = [...dataSiswaGabung];
+        console.log('Menggunakan data gabungan semua bulan:', sumberData.length);
+    }
+
+    // Filter berdasarkan kelas
+    let filteredDataTemp = [...sumberData];
+    if (filterKelas !== '') {
+        filteredDataTemp = filteredDataTemp.filter(siswa => siswa.kelas === filterKelas);
+        console.log('Setelah filter kelas:', filteredDataTemp.length);
+    }
+
+    // Urutkan hasil berdasarkan kelas lalu nama (biar rapi)
+    filteredDataTemp.sort((a, b) => {
+        if (a.kelas === b.kelas) {
+            return a.nama.localeCompare(b.nama);
+        }
+        return a.kelas.localeCompare(b.kelas);
+    });
+
+    console.log('=== HASIL AKHIR FILTER ===');
+    console.log('Total data setelah semua filter:', filteredDataTemp.length);
+
+    // Simpan hasil filter ke variabel global
+    filteredData = [...filteredDataTemp];
+    dataSiswa = [...filteredDataTemp];
+
+    // Update tampilan tabel
+    updateTableHeader();
+    loadSiswaData();
+    updateFilterStatus();
+
+    // 🔔 Tampilkan notifikasi sesuai judul
+    const filterStatusText = document.getElementById('filterStatus')?.textContent || 'Filter diperbarui!';
+    showNotification(filterStatusText);
+
+    // Tampilkan jumlah siswa
+    const totalSiswa = document.getElementById('totalSiswa');
+    if (totalSiswa) totalSiswa.textContent = filteredDataTemp.length;
+}
+
+
+        function show10Besar(mode) {
+    console.log('Menampilkan 10 besar:', mode);
+    currentFilter = mode;
+
+    let sumberData = [];
+    const filterBulan = document.getElementById('filterBulan')?.value;
+    const filterKelas = document.getElementById('filterKelas')?.value;
+
+    // Tentukan sumber data (pakai filter bulan, semester, atau gabungan)
+// Tentukan sumber data (pakai filter bulan, semester, atau gabungan)
+if (filterBulan && filterBulan !== 'Semua') {
+    const bulanGanjil = ['Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember', '07', '08', '09', '10', '11', '12'];
+    const bulanGenap  = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', '01', '02', '03', '04', '05', '06'];
+
+    if (filterBulan === 'Ganjil') {
+        sumberData = dataSiswaAsli.filter(siswa => bulanGanjil.includes(String(siswa.bulan).trim()));
+        console.log('Menggunakan data Semester Ganjil (Juli–Desember):', sumberData.length);
+    } else if (filterBulan === 'Genap') {
+        sumberData = dataSiswaAsli.filter(siswa => bulanGenap.includes(String(siswa.bulan).trim()));
+        console.log('Menggunakan data Semester Genap (Januari–Juni):', sumberData.length);
+    } else {
+        sumberData = dataSiswaAsli.filter(siswa => {
+            const val = String(siswa.bulan).trim();
+            return val.toLowerCase() === filterBulan.toLowerCase() || val === filterBulan.padStart(2, '0');
+        });
+        console.log('Menggunakan data bulan:', filterBulan, 'Jumlah:', sumberData.length);
+    }
+} else {
+    sumberData = [...dataSiswaGabung];
+    console.log('Menggunakan data gabungan semua bulan:', sumberData.length);
+}
+
+// Filter kelas jika ada
+if (filterKelas && filterKelas !== '') {
+    sumberData = sumberData.filter(siswa => siswa.kelas === filterKelas);
+    console.log('Filter berdasarkan kelas:', filterKelas, 'Jumlah:', sumberData.length);
+}
+
+    console.log('Data sumber sebelum sorting:', sumberData.length);
+
+    // Urutkan dan ambil 10 besar
+    let hasil = [];
+    if (mode === 'hadir') {
+        hasil = sumberData
+            .sort((a, b) => b.persentase_hadir - a.persentase_hadir)
+            .slice(0, 10);
+    } else if (mode === 'tidak_hadir') {
+        hasil = sumberData
+            .sort((a, b) => b.persentase_tidak_hadir - a.persentase_tidak_hadir)
+            .slice(0, 10);
+    }
+
+    console.log('Data setelah di-sort dan dipotong:', hasil.length);
+
+    // Simpan hasil ke variabel global
+    dataSiswa = [...hasil];
+    filteredData = [...hasil]; // supaya loadSiswaData pakai hasil ini
+
+    // Update tampilan tabel dan status
+    updateTableHeader();
+    loadSiswaData();
+    updateFilterStatus(); // update judul tabel sesuai filter
+
+    // ✅ tampilkan notifikasi berdasarkan teks judul tabel
+    const statusEl = document.getElementById('filterStatus');
+    const statusText = statusEl ? statusEl.textContent : 'Menampilkan data 10 besar';
+    showNotification(statusText);
+
+// 🎨 Highlight tombol aktif (ubah warna tombol & ikon)
+document.querySelectorAll('.btn-10besar').forEach(btn => {
+    btn.classList.remove(
+        'bg-green-500', 'bg-red-500', 'text-white',
+        'border-green-400', 'border-red-400',
+        'scale-105', 'shadow-lg'
+    );
+    btn.classList.add('bg-white', 'text-gray-700');
+
+    // Kembalikan warna ikon ke semula (hijau/merah)
+    const icon = btn.querySelector('svg');
+    if (icon) {
+        icon.classList.remove('text-white');
+        if (btn.innerText.includes('Kehadiran')) {
+            icon.classList.add('text-green-600');
+        } else if (btn.innerText.includes('Tidak Hadir')) {
+            icon.classList.add('text-red-600');
+        }
+    }
+});
+
+// 🔹 Jika mode hadir
+if (mode === 'hadir') {
+    const btn = document.querySelector("button[onclick=\"show10Besar('hadir')\"]");
+    if (btn) {
+        btn.classList.remove('bg-white', 'text-gray-700');
+        btn.classList.add('bg-green-500', 'text-white', 'border-green-400', 'scale-105', 'shadow-lg');
+
+        const icon = btn.querySelector('svg');
+        if (icon) {
+            icon.classList.remove('text-green-600');
+            icon.classList.add('text-white');
+        }
+    }
+}
+
+// 🔹 Jika mode tidak hadir
+else if (mode === 'tidak_hadir') {
+    const btn = document.querySelector("button[onclick=\"show10Besar('tidak_hadir')\"]");
+    if (btn) {
+        btn.classList.remove('bg-white', 'text-gray-700');
+        btn.classList.add('bg-red-500', 'text-white', 'border-red-400', 'scale-105', 'shadow-lg');
+
+        const icon = btn.querySelector('svg');
+        if (icon) {
+            icon.classList.remove('text-red-600');
+            icon.classList.add('text-white');
+        }
+    }
+}
+
+    console.log('10 besar selesai ditampilkan.');
+}
+
+
+
+
+
+function resetToOriginal() {
+    console.log('🔄 Reset ke tampilan data awal...');
+    currentFilter = '';
+
+    // Reset dropdown filter
+    document.getElementById('filterKelas').value = '';
+    document.getElementById('filterBulan').value = '';
+
+    // Kembalikan data penuh (gabungan semua bulan)
+    dataSiswa = [...dataSiswaGabung];
+    filteredData = []; // kosongkan filter agar loadSiswaData pakai dataSiswa penuh
+
+    // Update tampilan tabel
+    updateTableHeader();
+    loadSiswaData();
+
+    // Hapus highlight tombol aktif
+    document.querySelectorAll('.group').forEach(btn => 
+        btn.classList.remove('ring-2', 'ring-offset-2', 'ring-green-400', 'ring-red-400')
+    );
+
+    // Notifikasi visual
+    showNotification('Kembali ke tampilan data awal!');
+
+    // 🔄 Kembalikan tampilan tombol 10 besar ke default
+document.querySelectorAll('.btn-10besar').forEach(btn => {
+    btn.classList.remove(
+        'bg-green-500', 'bg-red-500', 'text-white',
+        'border-green-400', 'border-red-400',
+        'scale-105', 'shadow-lg'
+    );
+    btn.classList.add('bg-white', 'text-gray-700');
+
+    const icon = btn.querySelector('svg');
+    if (icon) {
+        icon.classList.remove('text-white');
+        if (btn.innerText.includes('Kehadiran')) {
+            icon.classList.add('text-green-600');
+        } else if (btn.innerText.includes('Tidak Hadir')) {
+            icon.classList.add('text-red-600');
+        }
+    }
+});
+
+}
+
+
+        function getMonthName(monthNumber) {
+            const months = {
+                '01': 'Januari', '02': 'Februari', '03': 'Maret', '04': 'April',
+                '05': 'Mei', '06': 'Juni', '07': 'Juli', '08': 'Agustus',
+                '09': 'September', '10': 'Oktober', '11': 'November', '12': 'Desember'
+            };
+            return months[monthNumber] || monthNumber;
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('successNotification');
+            const notificationText = document.getElementById('notificationText');
+            
+            // Update warna berdasarkan tipe
+            if (type === 'warning') {
+                notification.className = 'fixed top-4 right-4 bg-yellow-500 text-white px-6 py-4 rounded-lg shadow-lg z-50';
+            } else {
+                notification.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg z-50';
+            }
+            
+            notificationText.textContent = message;
+            notification.classList.remove('hidden');
+            
+            setTimeout(() => {
+                notification.classList.add('hidden');
+            }, 3000);
+        }
+
+        // Fungsi untuk refresh data dari Google Apps Script
+        async function refreshData() {
+            await loadDataFromGoogleAppsScript();
+            
+            // Reset filter dan tampilkan data terbaru
+            currentFilter = '';
+            document.getElementById('filterKelas').value = '';
+            document.getElementById('filterBulan').value = '';
+            
+            filteredData = [...dataSiswa];
+            updateTableHeader();
+            loadSiswaData();
+        }
+    </script>
+    <script>
+  function toggleSubMenu(id) {
+      const submenu = document.getElementById(id);
+      const arrow = document.getElementById('arrow-' + id);
+
+      submenu.classList.toggle('hidden');
+      arrow.classList.toggle('rotate-180'); // animasi panah berputar
+  }
+</script>
+<script>
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+    const closeSidebar = document.getElementById('closeSidebar');
+    const overlay = document.getElementById('overlay');
+
+    function openSidebar() {
+        sidebar.classList.remove('-translate-x-full');
+        overlay.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeSidebarFunc() {
+        sidebar.classList.add('-translate-x-full');
+        overlay.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+     // tombol hamburger
+    menuToggle.addEventListener('click', openSidebar);
+    // tombol X di sidebar
+    closeSidebar.addEventListener('click', closeSidebarFunc);
+    // klik overlay
+    overlay.addEventListener('click', closeSidebarFunc);
+
+    // klik di luar sidebar
+    document.addEventListener('click', function(e) {
+        const clickInside = sidebar.contains(e.target);
+        const clickToggle = menuToggle.contains(e.target);
+        const isMobile = window.innerWidth < 1024;
+        if (!clickInside && !clickToggle && isMobile && !sidebar.classList.contains('-translate-x-full')) {
+            closeSidebarFunc();
+        }
+    });
+
+    // Saat resize, tampilkan sidebar normal di desktop
+    window.addEventListener('resize', function() {
+        if (window.innerWidth >= 1024) {
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        } else {
+            sidebar.classList.add('-translate-x-full');
+        }
+    });
+</script>
+<script>
+    function updateClock() {
+        const now = new Date();
+
+        // Format waktu: HH:MM:SS
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+
+        // Format tanggal: Rabu, 23 Oktober 2025
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const dateString = now.toLocaleDateString('id-ID', options);
+
+        document.getElementById('date').textContent = dateString + ',';
+        document.getElementById('time').textContent = `${hours}:${minutes}:${seconds}`;
+
+        // Update di bagian "Jadwal Hari Ini" (tanpa jam)
+        const tanggalJadwal = document.getElementById('tanggalJadwal');
+        if (tanggalJadwal) {
+            tanggalJadwal.textContent = dateString;
+        }
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9937d932a4566cee',t:'MTc2MTI5MTg2MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
